@@ -5,8 +5,10 @@ import folium
 from streamlit_folium import st_folium
 import streamlit as st
 
-def preprocessing_dataframe(select):
-
+def region_analysis():
+    select = st.selectbox('질병 선택',['말라리아','이하선염','장티푸스','쯔쯔가무시'])
+    year = st.number_input('연도를 입력해주세요',2001,2023)
+    
     col = ['시','구']+[str(i) for i in range(2001,2024)]
 
     df = pd.read_csv('region_data/지역연도별 {}.csv'.format(select),encoding='euc-kr')
@@ -36,17 +38,9 @@ def preprocessing_dataframe(select):
     df = df.drop(['시','구'],axis=1)
     for_map = pd.merge(df,sig,on='시군구명')
 
-    return for_map
-
-def region_analysis():
     st.markdown('<h2>전국 시군구별 감염병 현황</h2>',unsafe_allow_html=True)
 
     sig2 = json.load(open('sig_geo.json',encoding='utf-8'))
-
-    select = st.selectbox('질병 선택',['말라리아','이하선염','장티푸스','쯔쯔가무시'])
-    year = st.number_input('연도를 입력해주세요',2001,2023)
-
-    for_map = preprocessing_dataframe(select)
 
     m = folium.Map(location=(36.7473475,128.0333144), zoom_start=7)
     m.choropleth(

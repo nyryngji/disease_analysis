@@ -1,10 +1,37 @@
 import streamlit as st
-from disease_region import preprocessing_dataframe
 import pandas as pd
 import matplotlib.pyplot as plt
 
 def analysis(select, year):
-    region_df = preprocessing_dataframe(select)
+    col = ['시','구']+[str(i) for i in range(2001,2024)]
+
+    df = pd.read_csv('region_data/지역연도별 {}.csv'.format(select),encoding='euc-kr')
+    sig = pd.read_excel('법정동 기준 시군구 단위.xlsx')
+
+    if 'Unnamed: 25' in df.columns:
+        df = df.drop('Unnamed: 25',axis=1)
+    df = df.replace('-', 0)
+
+    dic = {}
+
+    for i in range(len(df.columns)):
+        dic[df.columns[i]] = col[i]
+
+    df= df.rename(columns=dic)
+
+    df = df[df['시'] != df['구']] # ex) 서울 전체의 합을 나타낸 행 삭제
+    df['시군구명'] = df['시'] + ' ' + df['구']
+
+    sig_name = list(sig['시군구명'])
+
+    for i in range(len(sig_name)):
+        if sig_name[i] not in list(df['시군구명']) and sig_name[i] in list(df['구']):
+            new_name = df[df['구'] == sig.loc[i,'시군구명']]['시군구명'].index[0]
+            sig.loc[i,'시군구명'] = df.loc[new_name,'시군구명']
+    
+    df = df.drop(['시','구'],axis=1)
+    region_df = pd.merge(df,sig,on='시군구명')
+
     region_df = region_df.sort_values('{}'.format(str(year)),ascending=False)
 
     st.markdown('<h3 style="font-size:30px;">{}년 전국 {} 확진자 수는 <span style="color:red">{}</span>명입니다.</h3>'.format(year,select,region_df['{}'.format(str(year))].sum()),unsafe_allow_html=True)
