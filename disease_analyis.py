@@ -74,7 +74,6 @@ def pieplot2(df,year,select):
     
 
 def analysis2(select, year):
-    pop = pd.read_excel('행정구역 인구수.xlsx')
     df = pd.read_csv('gender_data/성별 {}.csv'.format(select),encoding='euc-kr')
 
     col = ['연령','성별']+[str(i) for i in range(2001,2024)]
