@@ -6,7 +6,7 @@ def analysis(select, year):
     col = ['시','구']+[str(i) for i in range(2001,2024)]
 
     df = pd.read_csv('region_data/지역연도별 {}.csv'.format(select),encoding='euc-kr')
-    sig = pd.read_excel('법정동 기준 시군구 단위.xlsx')
+    sig = pd.read_csv('법정동 기준 시군구 단위.csv',encoding='euc-kr')
 
     if 'Unnamed: 25' in df.columns:
         df = df.drop('Unnamed: 25',axis=1)
