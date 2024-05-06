@@ -43,17 +43,17 @@ def region_analysis():
     sig2 = json.load(open('sig_geo.json',encoding='utf-8'))
 
     m = folium.Map(location=(36.7473475,128.0333144), zoom_start=7)
-    m.choropleth(
-        geo_data=sig2,
-        name='{} 확진자'.format(select),
-        data=for_map,
-        columns=['시군구_코드_법정동기준', '{}'.format(str(year))],
-        key_on='feature.properties.SIG_CD',
-        fill_color='Blues',
-        fill_opacity=0.7,
-        line_opacity=0.3,
-        color = 'gray',
-        legend_name = '{}'.format(select)
-    )
+    # m.choropleth(
+    #     geo_data=sig2,
+    #     name='{} 확진자'.format(select),
+    #     data=for_map,
+    #     columns=['시군구_코드_법정동기준', '{}'.format(str(year))],
+    #     key_on='feature.properties.SIG_CD',
+    #     fill_color='Blues',
+    #     fill_opacity=0.7,
+    #     line_opacity=0.3,
+    #     color = 'gray',
+    #     legend_name = '{}'.format(select)
+    # )
 
     st_data = st_folium(m, width=725)
