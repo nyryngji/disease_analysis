@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 
 def analysis(select, year):
     col = ['시','구']+[str(i) for i in range(2001,2024)]
@@ -74,7 +75,6 @@ def pieplot2(df,year,select):
     
 
 def analysis2(select, year):
-    pop = pd.read_excel('행정구역 인구수.xlsx')
     df = pd.read_csv('gender_data/성별 {}.csv'.format(select),encoding='euc-kr')
 
     col = ['연령','성별']+[str(i) for i in range(2001,2024)]
@@ -92,6 +92,11 @@ def analysis2(select, year):
 
     df2 = df[['연령','성별','{}'.format(str(year))]]
 
-    plt.rc('font',family='Malgun Gothic')
+    font_path = "DoHyeon-Regular.ttf"
+
+    # 폰트 매니저에 폰트 추가
+    font_manager.fontManager.addfont(font_path)
+
+    plt.rc('font',family='Do Hyeon')
     pieplot1(df2,year,select)
     pieplot2(df2,year,select)
