@@ -56,9 +56,4 @@ def region_analysis():
         legend_name = '{}'.format(select)
     ).add_to(m)
 
-    # st_data = st_folium(m, width=725)
-    m.save("map.html")
-    html = open("map.html", "r").read()
-    
-    # Embed HTML into Streamlit
-    st.markdown(html, unsafe_allow_html=True)
+    st_data = st_folium(m, width=725)
