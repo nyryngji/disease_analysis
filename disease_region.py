@@ -1,9 +1,9 @@
+import folium.features
 import pandas as pd
 import json 
-import numpy as np
 import folium
-from streamlit_folium import st_folium
 import streamlit as st
+from streamlit_folium import st_folium
 
 def region_analysis():
     select = st.selectbox('질병 선택',['말라리아','이하선염','장티푸스','쯔쯔가무시'])
@@ -43,7 +43,8 @@ def region_analysis():
     sig2 = json.load(open('sig_geo.json',encoding='utf-8'))
 
     m = folium.Map(location=(36.7473475,128.0333144), zoom_start=7)
-    folium.Choropleth(
+    
+    choropleth = folium.Choropleth(
         geo_data=sig2,
         name='{} 확진자'.format(select),
         data=for_map,
@@ -54,6 +55,18 @@ def region_analysis():
         line_opacity=0.3,
         color = 'gray',
         legend_name = '{}'.format(select)
-    ).add_to(m)
+    )
+    
+    choropleth.geojson.add_to(m)
 
-    st_data = st_folium(m, width=725)
+    for feature in choropleth.geojson.data['features']:
+        sig_code = feature['properties']['SIG_CD']
+        feature['properties']['region_name'] = '지역명 : {}'.format(for_map[for_map['시군구_코드_법정동기준']==int(sig_code)]['시군구명'].to_list()[0]) if int(sig_code) in list(for_map['시군구_코드_법정동기준']) else ''
+        feature['properties']['pendemic'] = '감염자 수 : {}'.format(for_map[for_map['시군구_코드_법정동기준']==int(sig_code)]['{}'.format(str(year))].to_list()[0]) if int(sig_code) in list(for_map['시군구_코드_법정동기준']) else ''
+
+    choropleth.geojson.add_child(
+        folium.features.GeoJsonTooltip(['region_name', 'pendemic'], labels=False)
+    )
+
+    st_map = st_folium(m, width=700)
+    
