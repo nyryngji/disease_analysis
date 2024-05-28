@@ -21,7 +21,7 @@ def main():
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
-        body, div, section, p, a, li{
+        body, div, section, p, a, li, h2{
             font-family: 'Do Hyeon', sans-serif !important;
         }
         a.nav_link#text{
