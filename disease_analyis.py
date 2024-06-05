@@ -104,7 +104,7 @@ def analysis2(select, year):
     pieplot1(df2,year,select)
     pieplot2(df2,year,select)
 
-def region_analysis(select):
+def analysis3(select):
 
     st.markdown('<b style="color: #87CEEB; font-size: 30px;">2001~2023 전국 상위 확진자수 발생 지역 분포</b>'.format(select), unsafe_allow_html=True)
 
@@ -149,9 +149,12 @@ def region_analysis(select):
 
     res = [lst.count(r) for r in regions]
 
+    font_path = "font/DoHyeon-Regular.ttf"
+    font_manager.fontManager.addfont(font_path)
+
+    plt.rc('font',family='Do Hyeon')
     fig, ax = plt.subplots()
     ax.set_title('2001~2023 전국 상위 확진자수 발생 지역')
-    x = np.arange(17)
     ax.bar(regions,res)
     st.pyplot(fig)
 

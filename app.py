@@ -3,7 +3,7 @@ import pandas as pd
 from streamlit_option_menu import option_menu
 from disease_region import region_analysis
 from disease_introduce import disease_intro
-from disease_analyis import analysis,analysis2,region_analysis
+from disease_analyis import analysis,analysis2,analysis3
 from disease_prophet import predict
 from disease_ttest import ttest
 
@@ -53,7 +53,7 @@ def main():
         select = st.selectbox('질병 선택',['말라리아','이하선염','장티푸스','쯔쯔가무시'])
         year = st.number_input('연도를 입력해주세요',2001,2023)
         analysis(select,year)
-        region_analysis(select)
+        analysis3(select)
         analysis2(select, year)
     elif selected == '분석 보고서':
         select = st.selectbox('질병 선택',['말라리아','이하선염','장티푸스','쯔쯔가무시'])
