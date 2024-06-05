@@ -6,6 +6,8 @@ import streamlit as st
 from streamlit_folium import st_folium
 
 def region_analysis():
+    st.markdown('<h2>전국 시군구별 감염병 현황</h2>',unsafe_allow_html=True)
+    
     select = st.selectbox('질병 선택',['말라리아','이하선염','장티푸스','쯔쯔가무시'])
     year = st.number_input('연도를 입력해주세요',2001,2023)
 
@@ -37,8 +39,6 @@ def region_analysis():
     
     df = df.drop(['시','구'],axis=1)
     for_map = pd.merge(df,sig,on='시군구명')
-
-    st.markdown('<h2>전국 시군구별 감염병 현황</h2>',unsafe_allow_html=True)
 
     sig2 = json.load(open('sig_geo.json',encoding='utf-8'))
 
