@@ -37,7 +37,10 @@ def analysis(select, year):
 
     region_df = region_df.sort_values('{}'.format(str(year)),ascending=False)
 
+    death = pd.read_csv('D:\\bigdata_project\\region_data\\전국 사망자수.csv', encoding='euc-kr')
+
     st.markdown('<h3 style="font-size:30px;">{}년 전국 {} 확진자 수는 <span style="color:red">{}</span>명입니다.</h3>'.format(year,select,region_df['{}'.format(str(year))].sum()),unsafe_allow_html=True)
+    st.markdown('<h3 style="font-size:30px;">{}년 전국 {} 사망자 수는 <span style="color:red">{}</span>명입니다.</h3>'.format(year,select,death[death['병명'] == '{}'.format(select)]['{}'.format(str(year))].iloc[0]),unsafe_allow_html=True)
     st.markdown('<br>',unsafe_allow_html=True)
 
     st.markdown('<b style="color: #87CEEB; font-size: 30px;">지역별 감염병 확진자 수</b>', unsafe_allow_html=True)
