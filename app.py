@@ -22,7 +22,7 @@ def main():
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
         
-        body, div, section, p, a, li, h2, h3, h4{
+        body, div, section, p, a, li, h2, h3, h4, h5, h6{
             font-family: 'Do Hyeon', sans-serif !important;
         }
         a.nav_link#text, .plot-container plotly{
